@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1">
     <title>Title</title>
     <style>
         
@@ -48,6 +49,14 @@
                 imgs.style.top = y + 'px'
             }
         }
+        cellularPhone(){
+            document.ontouchmove = (e) => {
+                const x = e.touches[0].pageX - imgs.offsetWidth / 2;
+                const y = e.touches[0].pageY - imgs.offsetHeight / 2;
+                imgs.style.left = x + 'px'
+                imgs.style.top = y + 'px'
+            }
+        }
         init() {
             this.draw();
             let isDrag = false;
@@ -55,31 +64,56 @@
             ctx.lineJoin = 'round';
             ctx.shadowColor = '#000';
             ctx.shadowBlur = 4;
-            canvas.onmousedown = () => {
+            if(window.innerWidth > 1330){
+                canvas.onmousedown = () => {
+                    isDrag = true;
+                    ctx.beginPath()
+                }
+                canvas.onmousemove = (e) => {
+                    if (isDrag) {
+                        const x = e.pageX - canvas.offsetLeft;
+                        const y = e.pageY - canvas.offsetTop;
+                        ctx.lineTo(x, y);
+                        ctx.stroke();
+                        this.animateArr.push([x, y]);
+                    }
+                }
+                canvas.onmouseup = () => {
+                    isDrag = false;
+                    this.animateArr.push(-1)
+                }
+                canvas.onmouseover = () =>{
+                    imgs.style.display = 'block';
+                    document.body.style.cursor = 'none'
+                }
+                canvas.onmouseout = () => {
+                    imgs.style.display = 'none';
+                    document.body.style.cursor = 'pointer';
+                    canvas.onmouseup();
+                }
+            }
+            canvas.ontouchstart = () => {
+                this.cellularPhone();
+                imgs.style.display = 'block';
+                document.body.style.cursor = 'none'
                 isDrag = true;
                 ctx.beginPath()
             }
-            canvas.onmousemove = (e) => {
+            canvas.ontouchmove = (e) => {
                 if (isDrag) {
-                    const x = e.pageX - canvas.offsetLeft;
-                    const y = e.pageY - canvas.offsetTop;
+                    e.preventDefault();
+                    const x = e.touches[0].pageX - canvas.offsetLeft;
+                    const y = e.touches[0].pageY - canvas.offsetTop;
                     ctx.lineTo(x, y);
                     ctx.stroke();
                     this.animateArr.push([x, y]);
                 }
             }
-            canvas.onmouseup = () => {
+            canvas.ontouchend = () => {
                 isDrag = false;
                 this.animateArr.push(-1)
-            }
-            canvas.onmouseover = () =>{
-                imgs.style.display = 'block';
-                document.body.style.cursor = 'none'
-            }
-            canvas.onmouseout = () => {
                 imgs.style.display = 'none';
-                document.body.style.cursor = 'pointer'
-                canvas.onmouseup();
+                document.body.style.cursor = 'pointer';
             }
         }
         animateGo() {
@@ -118,74 +152,6 @@
         p.clear();
         p.animateArr = [];
     })
-    
-    // class draw{
-    //     constructor(width,height) {
-    //         canvas.width = width;
-    //         canvas.height = height;
-    //         this.timeId = null;
-    //         this.animateArray = [];
-    //     }
-    //     init(){
-    //         let isDrag = false;
-    //         ctx.lineWidth = 2;
-    //         ctx.lineJoin = 'round';
-    //         ctx.shadowColor = '#000'
-    //         ctx.shadowBlur = 4;
-    //         canvas.onmousedown = () =>{
-    //             isDrag = true;
-    //             ctx.beginPath();
-    //         }
-    //         canvas.onmousemove = (e) =>{
-    //             if(isDrag){
-    //                 let x = e.pageX - canvas.getBoundingClientRect().left;
-    //                 let y = e.pageY - canvas.getBoundingClientRect().top;
-    //                 ctx.lineTo(x,y);
-    //                 ctx.stroke();
-    //                 this.animateArray.push([x,y]);
-    //             }
-    //         }
-    //         canvas.onmouseup = ()=> {
-    //             isDrag = false;
-    //             this.animateArray.push(-1)
-    //         }
-    //         canvas.onmouseout = ()=>{
-    //             canvas.onmouseup();
-    //         }
-    //     }
-    //     animateGo(){
-    //         this.clear();
-    //         ctx.beginPath()
-    //         let loop = (Array,i)=>{
-    //             if(i < Array.length - 1){
-    //                 let arr = Array[i];
-    //                 if(arr === -1){
-    //                     this.clear()
-    //                 }else{
-    //                     ctx.lineTo(arr[0],arr[1]);
-    //                     ctx.stroke();
-    //                 }
-    //                 i++;
-    //                 this.timeId = setTimeout(()=>{
-    //                    loop(Array,i)
-    //                 },5)
-    //             }
-    //         }
-    //         loop(this.animateArray,0)
-    //     }
-    //     clear(){
-    //         ctx.clearRect(0,0,canvas.width,canvas.height);
-    //     }
-    // }
-    // let p = new draw(600,500);
-    // p.init();
-    // btn1.addEventListener('click',function(){
-    //     p.animateGo();
-    // })
-    // btn2.addEventListener('click',function(){
-    //     p.clear();
-    //     p.animateArray = [];
-    // })
 </script>
 </body>
 </html>
