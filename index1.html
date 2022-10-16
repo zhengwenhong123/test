@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+<!--<img src="./public/img/lunpan.jpg" alt="">-->
+<canvas width="600" height="600"></canvas>
+<script>
+    let canvas = document.querySelector('canvas');
+    let ctx = canvas.getContext('2d');
+    
+    function fillRect() {
+        ctx.fillStyle = 'pink';
+        ctx.fillRect(canvas.clientWidth / 2 - 50, canvas.clientHeight / 2 - 50, 100, 100)
+        
+        ctx.fillStyle = 'orange';
+        ctx.fillRect(canvas.clientWidth / 2 + 50, canvas.clientHeight / 2 + 50, 100, 100)
+    }
+    
+    // fillRect()
+    function strokeRect() {
+        ctx.strokeStyle = 'pink';
+        ctx.strokeRect(50, 50, 100, 100)
+    }
+    
+    
+    function clearRect() {
+        ctx.clearRect(130 - 5, 130 - 5, 50, 50)
+    }
+    
+    // clearRect()
+    
+    function beginPaths() {
+        ctx.fillStyle = 'pink'
+        ctx.beginPath();
+        ctx.moveTo(50, 50);
+        ctx.lineTo(200, 50)
+        ctx.lineTo(200, 200)
+        ctx.closePath();
+        ctx.fill();
+    }
+    
+    // beginPaths();
+    
+    //绘制圆弧;
+    
+    // function arcs() {
+    //     ctx.beginPath();
+    //     ctx.arc(150, 150, 50, 0.5 * Math.PI, 1.5 * Math.PI)
+    //     ctx.stroke();
+    // }
+    // arcs();
+    
+    // function arcsTo(){
+    //     ctx.beginPath();
+    //     ctx.moveTo(50,50);
+    //     ctx.lineTo(100,50);
+    //     //arcTo 参数1是控制点的x1,参数2是控制点的y1,参数点3是控制点的x2,参数点4是控制点y2,最后一个参数是圆的大小,也是半径;
+    //     ctx.arcTo(150,50,150,150,50)
+    //     ctx.lineTo(150,100)
+    //     ctx.arcTo(150,150,50,150,50)
+    //     // ctx.lineTo(20,150)
+    //     ctx.arcTo(20,150,20,50,50)
+    //     // ctx.lineTo(30,100)
+    //     ctx.arcTo(20,50,21,50,50)
+    //     ctx.stroke();
+    // }
+    // arcsTo();
+    
+    
+    function round() {
+        ctx.beginPath();
+        // ctx.moveTo(50,57);
+        ctx.lineTo(80, 50)
+        ctx.arcTo(130, 50, 130, 100, 50);
+        // ctx.lineTo(130,140);
+        ctx.arcTo(130, 150, 80, 150, 50)
+        // ctx.lineTo(50,150);
+        ctx.arcTo(20, 150, 35, 50, 50)
+        ctx.arcTo(30, 50, 90, 50, 50)
+        ctx.stroke();
+    }
+    
+    // round();
+    
+    function bezierCurve() {
+        ctx.beginPath();
+        // ctx.moveTo(20,20);
+        // ctx.quadraticCurveTo(50,100,100,20);
+        ctx.moveTo(130, 130);
+        ctx.quadraticCurveTo(150, 170, 170, 130);
+        ctx.stroke();
+    }
+    
+    // bezierCurve();
+    
+    function cubicBezierCur() {
+        ctx.beginPath();
+        ctx.moveTo(100, 100)
+        ctx.bezierCurveTo(100, 200, 200, 200, 200, 100)
+        ctx.stroke();
+    }
+    
+    // cubicBezierCur();
+    
+    function FillStyle() {
+        for (let i = 0; i < 6; i++) {
+            for (let j = 0; j < 6; j++) {
+                ctx.fillStyle = `rgb(${Math.floor(255 - 42 * i)},${Math.floor(255 - 42 * j)},0)`
+                ctx.fillRect(j * 50, i * 50, 50, 50)
+            }
+        }
+    }
+    
+    // FillStyle();
+    
+    function strokeStyle() {
+        for (let i = 0; i < 6; i++) {
+            for (let j = 0; j < 6; j++) {
+                ctx.strokeStyle = `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`
+                ctx.strokeRect(j * 50, i * 50, 50, 50)
+            }
+        }
+    }
+    
+    // strokeStyle();
+    
+    function randomInt(max, min) {
+        // return Math.floor(Math.random() * (max - min + 1)) + min
+        return parseInt(Math.random() * (max - min + 1) + min)
+    }
+    
+    // let lineCaps = ["butt", "round", "square"];
+    //
+    // function lineCap(lineCaps) {
+    //     for (let i in lineCaps) {
+    //         ctx.beginPath()
+    //         ctx.moveTo(20 + 30 * i, 50);
+    //         ctx.lineTo(20 + 30 * i, 100);
+    //         ctx.lineWidth = 20;
+    //         ctx.lineCap = lineCaps[i];
+    //         ctx.stroke();
+    //     }
+    // }
+    //
+    // lineCap(lineCaps);
+    
+    let lineJoin = ['round', 'bevel', 'miter'];
+    
+    
+    // function lineJoins(Array) {
+    //     for (let i in lineJoin) {
+    //         ctx.beginPath();
+    //         ctx.lineWidth = 30;
+    //         ctx.moveTo(50, 50 + 50 * i  );
+    //         ctx.lineTo(100, 100 + i * 50);
+    //         ctx.lineTo(150, 50 + i * 50);
+    //         ctx.lineTo(200, 100 + i * 50);
+    //         ctx.lineTo(250, 50 + i * 50);
+    //         ctx.lineJoin = Array[i]
+    //         ctx.stroke();
+    //     }
+    // }
+    //
+    // lineJoins(lineJoin)
+    
+    function slices() {
+        // var img = new Image();   // 创建img元素
+        // let img = document.querySelector('img');
+        img.onload = function () {
+            // ctx.drawImage(img, 100, 100, 1000 / 2, 1000 / 2, 100, 100, 100, 100)
+            ctx.drawImage(img, 100, 100, 100, 100)
+        }
+    }
+    
+    // slices()
+    function drew() {
+        ctx.fillRect(0, 0, 150, 150);
+        ctx.save();
+        
+        ctx.fillStyle = 'pink';
+        ctx.fillRect(15, 15, 120, 120)
+        ctx.save();
+        
+        ctx.fillStyle = '#09F';
+        ctx.globalAlpha = 0.5;
+        ctx.fillRect(30, 30, 90, 90)
+        ctx.save();
+        
+        ctx.restore();
+        ctx.fillRect(45, 45, 60, 60)
+        
+        ctx.restore();
+        ctx.fillRect(60, 60, 30, 30)
+    }
+    
+    // drew();
+    
+    function translate() {
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                ctx.save();
+                ctx.fillStyle = `rgb(${51 * i},${255 - 51 * i},255)`
+                ctx.translate(20 + j * 30, 30 + i * 30)
+                ctx.fillRect(0, 0, 20, 20)
+                ctx.restore();
+            }
+        }
+    }
+    
+    // translate();
+    
+    // function Rotating() {
+    //     ctx.translate(175, 175);
+    //     for (let i = 1; i < 6; i++) {
+    //         ctx.save();
+    //         ctx.fillStyle = `rgba(${51 * i},${255 - 51 * i},255)`;
+    //         for (let j = 0; j < i * 8; j++) {
+    //             ctx.rotate(Math.PI * 2 / (i * 8))
+    //             ctx.beginPath();
+    //             ctx.arc(0, i * 12.5, 4, 0, Math.PI * 2, true);
+    //             ctx.fill();
+    //         }
+    //     }
+    //     // ctx.restore()
+    // }
+    //
+    // Rotating()
+    
+    // function transforms() {
+    //     let sin = Math.sin(Math.PI / 6);
+    //     let cos = Math.cos(Math.PI / 6);
+    //
+    //     ctx.translate(100, 100);
+    //     let c;
+    //     for (let i = 0; i < 12; i++) {
+    //         let c = Math.floor(255 / 12 * i);
+    //         ctx.fillStyle = "rgb(" + c + "," + c + "," + c + ")";
+    //         ctx.fillRect(0, 0, 100, 10);
+    //         ctx.transform(cos, sin, -sin, cos, 0, 0);
+    //     }
+    // }
+    //
+    // transforms();
+    
+    // function draw() {
+    //     let sin = Math.sin(Math.PI / 6);
+    //     let cos = Math.cos(Math.PI / 6);
+    //     ctx.translate(150, 150);
+    //     let c;
+    //     for (let i = 0; i <= 12; i++) {
+    //         c = Math.floor(255 / 12 * i);
+    //         ctx.fillStyle = `rgb(${c},${c},${c})`;
+    //         ctx.fillRect(0, 0, 100, 10);
+    //         ctx.transform(cos, sin, -sin, cos, 0, 0)
+    //     }
+    // }
+    //
+    // draw()
+    let sun = new Image();
+    let moon = new Image();
+    let earth = new Image();
+    
+    class animationa {
+        constructor() {
+            this.init();
+        }
+        
+        init() {
+            sun.src = './public/img/sun.png';
+            moon.src = './public/img/moon.png';
+            earth.src = './public/img/earth.png';
+            
+            // window.requestAnimationFrame(animationa.drew);
+            requestAnimationFrame(animationa.draw)
+        }
+        
+        // static drew() {
+        //
+        //     ctx.globalCompositeOperation = 'destination-over';//谁先画,谁在上方(覆盖关系: 新图形画在 前一个图形的后面)
+        //     ctx.clearRect(150, 150, 300, 300); //清空画布,要更新动画, 必须清空画布 clear canvas
+        //     ctx.fillStyle = 'rgba(0,0,0,0.3)';//指定填充颜色
+        //     ctx.strokeStyle = 'rgba(0,153,255,0.4)';//指定绘线颜色
+        //
+        //     ctx.save();//保存状态 栈1 = 最初状态,原点在(0,0),没有移动过
+        //
+        //
+        //     // 画地球 Earth
+        //
+        //
+        //     ctx.translate(300, 300);//把画布原点 从(0,0) 移动到 (150,150)
+        //     let time = new Date();//获取当前的日期和时间
+        //
+        //     ctx.rotate(((2 * Math.PI) / 60) * time.getSeconds() + ((2 * Math.PI) / 60000) * time.getMilliseconds());//从具体的日期和时间中提取出秒和毫秒字段,把顺时针旋转角度和 当前时间的 秒和毫秒变化 关联在一起
+        //     ctx.translate(105, 0);//第二次移动原点,(150,150)水平向右移动105,把地球放在 绘线上
+        //     // ctx.fillRect(0, -12, 40, 24); // 画1个矩形,作为地球图形上的另一半遮盖住,当作阴影 Shadow
+        //     ctx.drawImage(earth, -12, -12);//把地球图形,添加到画布上
+        //
+        //     //画月球 Moon
+        //     ctx.save();//保存当前的状态 栈2
+        //     ctx.rotate(((2 * Math.PI) / 12) * time.getSeconds() + ((2 * Math.PI) / 12000) * time.getMilliseconds());//月球旋转角度,和当前时间变换关联在一起
+        //     ctx.translate(0, 28.5);//第三次 移动原点,(150+105,150)下移 28.5 (150+105,150+28.5)
+        //     ctx.drawImage(moon, -3.5, -3.5);//画月球
+        //
+        //     //画地球旋转轨道
+        //     ctx.restore();//恢复状态,当前状态=栈2
+        //     ctx.restore();//恢复状态,当前状态=栈1=最初状态 (原点没有移动过)
+        //
+        //     ctx.beginPath();
+        //     ctx.arc(300, 300, 105, 0, Math.PI * 2, false); // Earth orbit,关联关系,半径 = 地球相对第二原点(150,150) 向右移动的距离
+        //     ctx.stroke();//绘线
+        //
+        //     //画太阳
+        //     ctx.drawImage(sun, 150, 150, 300, 300);
+        //     window.requestAnimationFrame(animationa.drew);
+        //
+        // }
+        static draw() {
+            ctx.globalCompositeOperation = 'destination-over';
+            ctx.clearRect(150, 150, 300, 300);
+            ctx.fillStyle = 'rgba(0,0,0,.3)'
+            ctx.strokeStyle = 'rgba(0,153,255,0.4)';
+            ctx.save();
+            
+            //绘制地球;
+            ctx.translate(300, 300);
+            let time = new Date();
+            ctx.rotate(((Math.PI * 2) / 60) * time.getSeconds() + (((Math.PI * 2) / 60000) * time.getMilliseconds()));
+            ctx.translate(105, 0)
+            ctx.drawImage(earth, -12, -12)
+            ctx.save();
+            
+            
+            ctx.rotate(((Math.PI * 2) / 6) * time.getSeconds() + (((Math.PI * 2) / 6000) * time.getMilliseconds()));
+            ctx.translate(0, 28.5);
+            ctx.drawImage(moon, -3.5, -3.5)
+            
+            ctx.restore()
+            ctx.restore();
+            
+            ctx.beginPath();
+            ctx.arc(300, 300, 105, 0, Math.PI * 2)
+            ctx.stroke();
+            
+            ctx.drawImage(sun, 0, 0, 600, 600)
+            requestAnimationFrame(animationa.draw);
+        }
+    }
+    
+    let My_animations = new animationa();
+    
+    
+
+</script>
+</body>
+</html>

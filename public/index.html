@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    　<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <link rel="stylesheet" href="./css/app.css">
+    <style>
+        .bg {
+            width: 650px;
+            height: 600px;
+            background: url("./img/lunpan.jpg") no-repeat;
+            position: relative;
+        }
+
+    </style>
+    
+  
+</head>
+<body>
+<div class="bg">
+    <img src="./img/btn.png" alt="">
+    <img src="./img/jiangpin.png" alt="">
+</div>
+
+<button class="btns">点击发送</button>
+<button class="btnss">获取数据</button>
+<script src="./js/app.js"></script>
+
+<script>
+    let sb = $.noConflict();
+    sb('.btns').on('click',()=>{
+        console.log(window.location.query)
+        sb.ajax({
+            type:'GET',
+            url:'/user/1',
+            data:{
+                status:1,
+                data:'发送数据成功',
+            },
+            success(data,status){
+                // data.map((v,i)=>{
+                //     console.log(v.data)
+                //     console.log(i)
+                // })
+            }
+        })
+    })
+    
+    sb('.btnss').on('click',()=>{
+      let ajaxs = sb.ajax({
+            type:'GET',
+            url:'   https://4e1f7dfe0bc34a.lhr.life/user/1',
+            success(data, status) {
+                console.log(data)
+            },
+            // timeout:100,
+            // complete(XMLHttpRequest, status){
+            //     if(status === 'timeout'){
+            //         ajaxs.abort();
+            //         Module.warning({
+            //             title: '友情提示',
+            //             content: '网络不稳定',
+            //         })
+            //     }
+            // }
+        })
+    })
+</script>
+</body>
+</html>

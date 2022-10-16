@@ -1,0 +1,26 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+
+img[src^="./img/btn"] {
+    position: absolute;
+    z-index: 10;
+    top: 155px;
+    left: 247px;
+}
+
+img[src^="./img/jiangpin"] {
+    position: absolute;
+    top: 60px;
+    left: 116px;
+    transition: all 4s ease-in-out;
+}
